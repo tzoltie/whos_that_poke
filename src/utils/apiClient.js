@@ -1,7 +1,7 @@
 import { API_URL, THIRD_PARTY_API_URL } from "./constants";
 
-async function getPokemon() {
-    return thirdPartyAPIReq()
+async function getPokemon(route) {
+    return thirdPartyAPIReq(route)
 }
 
 async function apiRequest(method, data, route) {
@@ -20,14 +20,19 @@ async function apiRequest(method, data, route) {
     return response.json()
 }
 
-async function thirdPartyAPIReq() {
+async function thirdPartyAPIReq(route) {
     const request = {
         method: "GET",
         headers: {
             'Content-Type': 'application/json',
         }
     }
-    const response = await fetch(`${THIRD_PARTY_API_URL}`, request)
+    if(!route) {
+        const response = await fetch(`${THIRD_PARTY_API_URL}`, request)
+        return response.json()
+    }
+    const response = await fetch(`${route}`, request)
+    
     return response.json()
 }
 

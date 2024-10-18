@@ -1,12 +1,11 @@
 import { useState } from 'react'
 import './App.css'
 import LandingPage from './components/landingPage/landingPage'
+import GameUI from './components/gameUI'
 
 function App() {
   const [pokemon, setPokemon] = useState({})
   const [play, setPlay] = useState(false)
-  
-  console.log(pokemon)
 
   return (
     <div className="app-container">
@@ -17,7 +16,7 @@ function App() {
       {!play ? (
         <LandingPage setPokemon={setPokemon} pokemon={pokemon} setPlay={setPlay}/>
       ) : (
-        <p>Welcome!</p>
+        <GameUI pokemon={pokemon.results}/>
       )}
       </main>
     </div>

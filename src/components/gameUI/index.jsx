@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react"
 import { getPokemon } from "../../utils/apiClient.js"
+import "./styling.css"
+import Button from "../button/index.jsx"
 
 export default function GameUI({pokemon}) {
     const [pokeGuessed, setPokeGuessed] = useState([])
     const [current, setCurrent] = useState({})
     const [found, setFound] = useState(false)
+    const [pokemonNames, setPokemonNames] = useState([])
     useEffect(() => {
         if(!found) {
             newPokemon()
@@ -42,6 +45,18 @@ export default function GameUI({pokemon}) {
        return;
     }
 
+    const createOptions = () => {
+        while(pokemonNames.length < 3) {
+            console.log(true)
+            const pokemonPicker = pokemonRandomizer()
+            const alreadySelected = pokemonNames.find(poke => poke.name === pokemonPicker.name)
+            if(!alreadySelected) {
+                setPokemonNames(prevNames => [...prevNames, pokemonPicker, current])
+            }
+        }
+        console.log("names",pokemonNames)
+    }
+
     return (
         <div className="game-interface">
             <div>
@@ -50,11 +65,15 @@ export default function GameUI({pokemon}) {
             </div>
             <div>
                 {typeof current.name !== "undefined" &&
+                <>
                 <img 
                     alt="pokemon image"
                     className="pokemon-image"
                     src={current.sprites.front_default}
-                />}
+                />
+                {pokemonNames.map((pokemon, index) => 
+                    <Button text={pokemon.name} key={index}/>)}
+                </>}
             </div>
         </div>
     )

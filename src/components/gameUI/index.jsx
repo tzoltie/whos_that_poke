@@ -8,17 +8,31 @@ export default function GameUI({pokemon}) {
     const [current, setCurrent] = useState({})
     const [found, setFound] = useState(false)
     const [pokemonNames, setPokemonNames] = useState([])
+    let score = 0
+
     useEffect(() => {
         if(!found) {
             newPokemon()
         }
-        if(current) {
-            console.log("current Pokemon:", current)
-        }
     }, [found])
+
+    useEffect(() => {
+        if(current.name) {
+            createOptions()
+        }
+    }, [current])
 
     const pokemonRandomizer = () => {
         return pokemon[Math.floor(Math.random() * pokemon.length)]
+    }
+
+    const buttonRandomIzer = () => {
+        for(let i = pokemonNames.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1))
+            const temp = pokemonNames[i]
+            pokemonNames[j] = temp
+        }
+        return pokemonNames
     }
 
     const getPokemonDetails = (pokemon) => {
@@ -42,39 +56,47 @@ export default function GameUI({pokemon}) {
         setCurrent(pokeData)
         setFound(true)
        })
-       return;
     }
 
     const createOptions = () => {
-        while(pokemonNames.length < 3) {
-            console.log(true)
+        let selectedPokemon = []
+        while(selectedPokemon.length < 3) {
             const pokemonPicker = pokemonRandomizer()
-            const alreadySelected = pokemonNames.find(poke => poke.name === pokemonPicker.name)
+            const alreadySelected = selectedPokemon.find(poke => poke.name === pokemonPicker.name)
             if(!alreadySelected) {
-                setPokemonNames(prevNames => [...prevNames, pokemonPicker, current])
+                selectedPokemon.push(pokemonPicker)
             }
         }
-        console.log("names",pokemonNames)
+        setPokemonNames([...selectedPokemon, current])
+    }
+
+    const verifyClick = (choice) => {
+        console.log(choice)
+        if(choice.name === current.name) {
+            console.log(true)
+            score++
+        }
     }
 
     return (
         <div className="game-interface">
             <div>
-                <h2>Guess the pokemon?</h2>
+                <h2>Guess the pokemon</h2>
                 <p>Use the outline of the image to guess the correct Pokemon.</p>
+                <h3>Score: {score}</h3>
             </div>
-            <div>
-                {typeof current.name !== "undefined" &&
-                <>
+            {found &&
+            <div className="pokemon-card">
                 <img 
                     alt="pokemon image"
                     className="pokemon-image"
                     src={current.sprites.front_default}
                 />
+                <div className="btn-container">
                 {pokemonNames.map((pokemon, index) => 
-                    <Button text={pokemon.name} key={index}/>)}
-                </>}
-            </div>
+                    <Button text={pokemon.name} key={index} onClick={() => verifyClick(pokemon)}/>)}
+                </div>
+            </div>}
         </div>
     )
 }

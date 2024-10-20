@@ -1,5 +1,17 @@
 .pokemon-image {
     width: 250px;
+    filter: invert(100%) sepia(100%) saturate(1000%) brightness(100%) contrast(0%);
+}
+
+.pokemon-image-box {
+    border: 4px solid gold;
+    background-image: linear-gradient(to right, rgb(123, 43, 123), rgb(225, 14, 84));
+}
+
+.game-interface {
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
 }
 
 .btn-container {
@@ -7,4 +19,64 @@
     flex-direction: row;
     gap: 0.5rem;
     justify-content: center;
+}
+
+.pokemon-card, .pokemon-card-back {
+    background-color: #ffcb05;
+    width: 400px;
+    border-radius: 15px;
+    padding: 0.5rem;
+    place-self: center;
+    height: 550px;
+}
+
+.pokemon-card-back {
+    background-color: #3c5aa6!important;
+}
+
+.pokemon-card > * {
+    height: 535px;
+}
+
+.pokemon-card-inner {
+    padding: 0.5rem;
+    background-color: beige;
+    position: relative;
+}
+
+.pokemon-name {
+    place-items: start;
+}
+
+.btn-container {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}
+
+.pokeball {
+    width: 150px;
+}
+
+.pokemon-card-back {
+    align-items: center;
+}
+
+.pokemon-card-inner-back {
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    background-color:  #2a75bb;
+    height: 550px;
+    gap: 1.5rem;
+}
+
+.pokemon-logo, .pokemon-logo-upside-down {
+    width: 250px;
+    transform: rotateY(180deg);
+}
+
+
+.pokemon-logo-upside-down {
+    transform: rotateX(180deg);
 }

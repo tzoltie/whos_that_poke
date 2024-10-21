@@ -73,7 +73,6 @@
 
 .pokemon-logo, .pokemon-logo-upside-down {
     width: 250px;
-    transform: rotateY(180deg);
 }
 
 

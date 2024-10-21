@@ -2,6 +2,7 @@ import { useState } from 'react'
 import './App.css'
 import LandingPage from './components/landingPage/landingPage'
 import GameUI from './components/gameUI'
+import PokemonCardBack from './components/cardBack/pokemonCardBack'
 
 function App() {
   const [pokemon, setPokemon] = useState({})

@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { getPokemon } from "../../utils/apiClient";
 import Button from "../button";
+import PokemonCardBack from "../cardBack/pokemonCardBack";
 
 export default function LandingPage({setPokemon, pokemon, setPlay}) {
 
@@ -15,8 +16,7 @@ export default function LandingPage({setPokemon, pokemon, setPlay}) {
     return (
         <div className="landing-page">
             <main>
-                {/* <img src={pokemon?.results[0].url}/> */}
-                <Button text={"Play!"} className={"start-game-btn"} onClick={() => onClick()}/>
+                <Button text={<PokemonCardBack />} className={"start-game-btn"} onClick={() => onClick()}/>
             </main>
             
         </div>

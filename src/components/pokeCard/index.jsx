@@ -14,7 +14,7 @@ export default function PokeCard({current, pokemonNames, verifyClick, revealPoke
           <img
             alt="pokemon image"
             className="pokemon-image"
-            src={current.sprites.front_default}
+            src={current.sprites?.front_default}
           />
         </div>
         {!revealPoke &&

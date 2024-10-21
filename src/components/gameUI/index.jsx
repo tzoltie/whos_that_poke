@@ -5,6 +5,8 @@ import Button from "../button/index.jsx"
 import Pokeball from "../cardBack/pokeball.jsx"
 import Logo from "../cardBack/logo.jsx"
 import PokeCard from "../pokeCard/index.jsx"
+import PokemonCardBack from "../cardBack/pokemonCardBack.jsx"
+import ReactCardFlip from "react-card-flip"
 
 export default function GameUI({pokemon}) {
     const [pokeGuessed, setPokeGuessed] = useState([])
@@ -13,6 +15,7 @@ export default function GameUI({pokemon}) {
     const [revealPoke, setRevealPoke] = useState(false)
     const [pokemonNames, setPokemonNames] = useState([])
     const [score, setScore] = useState(0)
+    const [isFlipped, setIsFlipped] = useState(false)
 
     useEffect(() => {
         if(!found) {
@@ -75,24 +78,25 @@ export default function GameUI({pokemon}) {
     }
 
     const verifyClick = (choice) => {
-        
-        const pokemonCard = document.getElementsByClassName("pokemon-card")[0]
-        pokemonCard.style.transform = "rotateY(180deg)"
-        pokemonCard.style.transition = "0.8s"
 
-        setRevealPoke(true)
-
-        const pokemonCardBack = document.getElementsByClassName("pokemon-card-back")[0]
-        pokemonCardBack.style.transform = "rotateY(180deg)"
-        pokemonCardBack.style.transition = "0.8s"
+        setRevealPoke(!revealPoke)
+        setIsFlipped(!isFlipped)
         
+
         const pokemonImage = document.getElementsByClassName("pokemon-image")[0]
         pokemonImage.style.filter = "none"
+
         if(choice.name === current.name) {
             setScore(score + 1)
             // setFound(prev => !prev)
         }
+
+        setTimeout(() => {
+            setIsFlipped(prev => !prev)
+        }, 2000)
     }
+
+   
 
     return (
         <div className="game-interface">
@@ -101,17 +105,13 @@ export default function GameUI({pokemon}) {
                 <p>Use the outline of the image to guess the correct Pokemon.</p>
                 <h3>Score: {score}</h3>
             </div>
-            {found && !revealPoke &&
-            <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>}
-            <div className="pokemon-card-back">
-                <div className="pokemon-card-inner-back">
-                    <Logo className={"pokemon-logo"} />
-                    <Pokeball />
-                    <Logo className={"pokemon-logo-upside-down"}/>
-                </div>
-            </div>
-            {revealPoke &&
-            <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>}
+                <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
+                    <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>
+                    {isFlipped ?
+                    <PokemonCardBack setIsFlipped={setIsFlipped} isFlipped={isFlipped} revealPoke={revealPoke}/>
+                : 
+                    <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>}
+                </ReactCardFlip>
         </div>
     )
 }

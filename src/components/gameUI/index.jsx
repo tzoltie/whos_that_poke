@@ -8,7 +8,7 @@ import PokeCard from "../pokeCard/index.jsx"
 import PokemonCardBack from "../cardBack/pokemonCardBack.jsx"
 import ReactCardFlip from "react-card-flip"
 
-export default function GameUI({pokemon}) {
+export default function GameUI({pokemon, pokemonRes, setPokemon}) {
     const [pokeGuessed, setPokeGuessed] = useState([])
     const [current, setCurrent] = useState({})
     const [found, setFound] = useState(false)
@@ -33,15 +33,6 @@ export default function GameUI({pokemon}) {
         return pokemon[Math.floor(Math.random() * pokemon.length)]
     }
 
-    const buttonRandomIzer = () => {
-        for(let i = pokemonNames.length - 1; i > 0; i--) {
-            const j = Math.floor(Math.random() * (i + 1))
-            const temp = pokemonNames[i]
-            pokemonNames[j] = temp
-        }
-        return pokemonNames
-    }
-
     const getPokemonDetails = (pokemon) => {
         return getPokemon(pokemon)
     }
@@ -51,6 +42,7 @@ export default function GameUI({pokemon}) {
        const pokeAlreadyGuessed = pokeGuessed.find((p) => p.name === current.name)
         
        if(pokeAlreadyGuessed) {
+        getNewPokemonList()
         const newPoke = pokemonRandomizer()
         getPokemonDetails(newPoke.url).then((pokeData) => {
             setCurrent(pokeData)
@@ -74,7 +66,9 @@ export default function GameUI({pokemon}) {
                 selectedPokemon.push(pokemonPicker)
             }
         }
-        setPokemonNames([...selectedPokemon, current])
+        selectedPokemon.push(current)
+        const newArr = selectedPokemon.sort(() => Math.random() - 0.5)
+        setPokemonNames(newArr)
     }
 
     const verifyClick = (choice) => {
@@ -88,15 +82,30 @@ export default function GameUI({pokemon}) {
 
         if(choice.name === current.name) {
             setScore(score + 1)
-            // setFound(prev => !prev)
         }
+
+        setPokeGuessed([...pokeGuessed, current])
 
         setTimeout(() => {
             setIsFlipped(prev => !prev)
         }, 2000)
     }
 
-   
+    const getNewCard = () => {
+        setIsFlipped(!isFlipped)
+        setFound(false)
+        setRevealPoke(prev => !prev)
+        setTimeout(() => {
+            setIsFlipped(prev => !prev)
+        }, 2000)
+        const pokemonImage = document.getElementsByClassName("pokemon-image")[0]
+        pokemonImage.style.filter = "invert(100%)"
+        pokemonImage.style.filter = "contrast(0%)"
+    }
+
+   const getNewPokemonList = () => {
+        getPokemon(pokemonRes.next).then(setPokemon)
+   }
 
     return (
         <div className="game-interface">
@@ -110,8 +119,11 @@ export default function GameUI({pokemon}) {
                     {isFlipped ?
                     <PokemonCardBack setIsFlipped={setIsFlipped} isFlipped={isFlipped} revealPoke={revealPoke}/>
                 : 
-                    <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>}
+                    <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>
+                }
                 </ReactCardFlip>
+            {!isFlipped && revealPoke &&
+            <Button text={"next"} onClick={() => getNewCard()}/>}
         </div>
     )
 }

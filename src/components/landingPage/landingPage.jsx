@@ -3,7 +3,7 @@ import { getPokemon } from "../../utils/apiClient";
 import Button from "../button";
 import PokemonCardBack from "../cardBack/pokemonCardBack";
 
-export default function LandingPage({setPokemon, pokemon, setPlay}) {
+export default function LandingPage({setPokemon, setPlay}) {
 
     useEffect(() => {
         getPokemon().then(setPokemon)

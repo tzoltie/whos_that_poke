@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import LandingPage from './components/landingPage/landingPage'
 import GameUI from './components/gameUI'
-import PokemonCardBack from './components/cardBack/pokemonCardBack'
 
 function App() {
   const [pokemon, setPokemon] = useState({})
@@ -17,7 +16,7 @@ function App() {
       {!play ? (
         <LandingPage setPokemon={setPokemon} pokemon={pokemon} setPlay={setPlay}/>
       ) : (
-        <GameUI pokemon={pokemon.results}/>
+        <GameUI pokemon={pokemon.results} pokemonRes={pokemon} setPokemon={setPokemon}/>
       )}
       </main>
     </div>

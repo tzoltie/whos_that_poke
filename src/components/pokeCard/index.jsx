@@ -29,7 +29,7 @@ export default function PokeCard({current, pokemonNames, verifyClick, revealPoke
     
     return;
   }
-  
+
   return (
     <div className="pokemon-card">
       <div className="pokemon-card-inner">

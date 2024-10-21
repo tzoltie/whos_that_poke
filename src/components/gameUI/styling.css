@@ -13,6 +13,7 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
+    gap: 1rem;
 }
 
 .btn-container {
@@ -86,4 +87,17 @@
 
 .pokemon-logo-upside-down {
     transform: rotateX(180deg);
+}
+
+.next-poke-btn {
+    background: linear-gradient(0.25turn, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
+    color: white;
+    border: 2px solid gold;
+}
+
+.answer-message {
+    position: absolute;
+    top: 50%;
+    z-index: 2;
+    color: white;
 }

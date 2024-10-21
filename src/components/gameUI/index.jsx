@@ -7,6 +7,8 @@ import Logo from "../cardBack/logo.jsx"
 import PokeCard from "../pokeCard/index.jsx"
 import PokemonCardBack from "../cardBack/pokemonCardBack.jsx"
 import ReactCardFlip from "react-card-flip"
+import ThumbsUp from "../assets/thumbsUp.jsx"
+import ThumbsDown from "../assets/thumbsDown.jsx"
 
 export default function GameUI({pokemon, pokemonRes, setPokemon}) {
     const [pokeGuessed, setPokeGuessed] = useState([])
@@ -16,9 +18,13 @@ export default function GameUI({pokemon, pokemonRes, setPokemon}) {
     const [pokemonNames, setPokemonNames] = useState([])
     const [score, setScore] = useState(0)
     const [isFlipped, setIsFlipped] = useState(false)
+    const [isCorrect, setIsCorrect] = useState(false)
+    const [isIncorrect, setIsIncorrect] = useState(false)
 
     useEffect(() => {
         if(!found) {
+            setIsCorrect(false)
+            setIsIncorrect(false)
             newPokemon()
         }
     }, [found])
@@ -82,6 +88,15 @@ export default function GameUI({pokemon, pokemonRes, setPokemon}) {
 
         if(choice.name === current.name) {
             setScore(score + 1)
+            setIsCorrect(true)
+            setTimeout(() => {
+                setIsCorrect(false)
+            }, 3500)
+        } else {
+            setIsIncorrect(true)
+            setTimeout(() => {
+                setIsIncorrect(false)
+            }, 3500)
         }
 
         setPokeGuessed([...pokeGuessed, current])
@@ -114,6 +129,18 @@ export default function GameUI({pokemon, pokemonRes, setPokemon}) {
                 <p>Use the outline of the image to guess the correct Pokemon.</p>
                 <h3>Score: {score}</h3>
             </div>
+            {isCorrect &&
+            <>
+                <ThumbsUp />
+                <h2 className="answer-message">Nice Job! You got that right</h2>
+            </>
+            }
+            {isIncorrect &&
+            <>
+                <ThumbsDown />
+                <h2 className="answer-message">Unlucky, not this time</h2>
+            </> 
+            }
                 <ReactCardFlip isFlipped={isFlipped} flipDirection="horizontal">
                     <PokeCard current={current} pokemonNames={pokemonNames} verifyClick={verifyClick} revealPoke={revealPoke}/>
                     {isFlipped ?
@@ -123,7 +150,7 @@ export default function GameUI({pokemon, pokemonRes, setPokemon}) {
                 }
                 </ReactCardFlip>
             {!isFlipped && revealPoke &&
-            <Button text={"next"} onClick={() => getNewCard()}/>}
+            <Button text={"next"} onClick={() => getNewCard()} className={"next-poke-btn"}/>}
         </div>
     )
 }

@@ -1,0 +1,7 @@
+.result-icon {
+    width: 100px;
+    fill: #ffe601;
+    position: absolute;
+    top: 60%;
+    z-index: 2;
+}

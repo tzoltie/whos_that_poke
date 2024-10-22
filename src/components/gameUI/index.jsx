@@ -7,6 +7,7 @@ import PokemonCardBack from "../cardBack/pokemonCardBack.jsx"
 import ReactCardFlip from "react-card-flip"
 import ThumbsUp from "../assets/thumbsUp.jsx"
 import ThumbsDown from "../assets/thumbsDown.jsx"
+import Confetti from "../assets/confetti.jsx"
 
 
 export default function GameUI() {
@@ -17,12 +18,14 @@ export default function GameUI() {
     const [isFlipped, setIsFlipped] = useState(false)
     const [isCorrect, setIsCorrect] = useState(false)
     const [isIncorrect, setIsIncorrect] = useState(false)
+    const [showConfetti, setShowConfetti] = useState(false)
 
     useEffect(() => {
         setIsCorrect(false)
         setIsIncorrect(false)
         newPokemon()
     }, [found])
+
 
     const newPokemon = () => {
         const idGenerator = Math.floor(Math.random() * (50 - 1 + 1) + 1)
@@ -39,6 +42,7 @@ export default function GameUI() {
             if(updatedData.data.apiResults === "correct!") {
                 setScore(score + 1)
                 setIsCorrect(true)
+                setShowConfetti(true)
             } else {
                 setIsIncorrect(true)
             }
@@ -50,7 +54,7 @@ export default function GameUI() {
                 setIsFlipped(prev => !prev)
                 const pokemonImage = document.getElementsByClassName("pokemon-image")[0]
                 pokemonImage.style.filter = "none"
-            }, 2000)
+            }, 1000)
         })
     }
 
@@ -59,6 +63,7 @@ export default function GameUI() {
         setFound(prev => !prev)
         setRevealPoke(prev => !prev)
         setCurrent({ status: "pending" })
+        setShowConfetti(false)
         setTimeout(() => {
             setIsFlipped(prev => !prev)
         }, 500)
@@ -77,8 +82,10 @@ export default function GameUI() {
             {isCorrect &&
             <>
                 <ThumbsUp />
-                <h2 className="answer-message">Nice Job! You got that right</h2>
             </>
+            }
+            {showConfetti &&
+                <Confetti />
             }
             {isIncorrect &&
             <>

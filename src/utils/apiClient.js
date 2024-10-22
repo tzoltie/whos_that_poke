@@ -1,10 +1,29 @@
-import { API_URL, THIRD_PARTY_API_URL } from "./constants";
+import { API_URL } from "./constants";
 
 async function getPokemon(route) {
-    return thirdPartyAPIReq(route)
+    return get(route)
 }
 
-async function apiRequest(method, data, route) {
+function getPokemonById(id) {
+    return get(`pokemon/${id}`)
+}
+
+function sendAnswerToAPI(pokemonName, id) {
+    const payload = {
+        name: pokemonName
+    }
+    return post(payload, `pokemon/answer/${id}`)
+}
+
+async function post(payload, route) {
+    return apiRequest("POST", route, payload)
+}
+
+async function get(route) {
+    return apiRequest("GET", route)
+}
+
+async function apiRequest(method, route, data) {
     const request = {
         headers: {
             'Content-Type': 'application/json',
@@ -15,29 +34,21 @@ async function apiRequest(method, data, route) {
         request.body = JSON.stringify(data)
     }
 
-    const response = await fetch(`${API_URL}/${route}`, request)
-    
-    return response.json()
-}
-
-async function thirdPartyAPIReq(route) {
-    const request = {
-        method: "GET",
-        headers: {
-            'Content-Type': 'application/json',
-        }
-    }
     if(!route) {
-        const response = await fetch(`${THIRD_PARTY_API_URL}`, request)
+        const response = await fetch(`${API_URL}`, request)
         return response.json()
     }
-    const response = await fetch(`${route}`, request)
-    
-    return response.json()
+
+    const response = await fetch(`${API_URL}/${route}`, request)
+
+    const res = response.json()
+
+    return res
 }
 
 export {
     apiRequest,
-    thirdPartyAPIReq,
-    getPokemon
+    getPokemon,
+    sendAnswerToAPI,
+    getPokemonById
 }

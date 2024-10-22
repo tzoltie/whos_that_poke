@@ -93,6 +93,7 @@
     background: linear-gradient(0.25turn, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
     color: white;
     border: 2px solid gold;
+    z-index: 2;
 }
 
 .answer-message {

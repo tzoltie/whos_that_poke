@@ -6,7 +6,7 @@ import PokemonCardBack from "../cardBack/pokemonCardBack";
 export default function LandingPage({setPokemon, setPlay}) {
 
     useEffect(() => {
-        getPokemon().then(setPokemon)
+        getPokemon("pokemon/").then(setPokemon)
     }, [])
 
     const onClick = () => {

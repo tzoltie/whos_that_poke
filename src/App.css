@@ -8,7 +8,7 @@
   grid-template: 
   'header' 7rem
   'main' 1fr
-  'footer'2rem/
+  'footer'7rem/
   1fr;
   width: 100vw;
   min-height: 100vh;
@@ -23,6 +23,7 @@
   color: white;
   text-align: center;
 }
+
 .app-header > h1 {
   font-family: "Press Start 2P", system-ui;
   font-weight: 200;

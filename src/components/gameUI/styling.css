@@ -20,10 +20,21 @@
 
 .game-ui-box > p {
     margin: 0;
+    font-family: "Press Start 2P", system-ui;
+    font-size: small;
+    color: white;
+}
+
+.game-ui-box > h3 {
+    font-family: "Press Start 2P", system-ui;
+    font-size: small;
+    color: white;
 }
 
 .game-ui-title {
     margin: 0;
+    font-family: "Press Start 2P", system-ui;
+    color: white;
 }
 
 .btn-container {
@@ -119,8 +130,27 @@
 .options-btn {
     background-image: linear-gradient(0.25turn, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
     border: 3px solid gold;
+    color: white;
 }
 
 .options-btn:focus {
     background-image: linear-gradient(to left, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
+}
+
+.all-card-box {
+    display: flex;
+    flex-direction: auto;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    justify-content: center;
+}
+
+.complete-message-box > * {
+    font-family: "Press Start 2P", system-ui;
+    font-size: small;
+    color: white;
+}
+
+.all-card-box > .pokemon-card > .pokemon-card-inner > .pokemon-image-box > .pokemon-image {
+    filter: none;
 }

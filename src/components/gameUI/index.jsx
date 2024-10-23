@@ -23,6 +23,9 @@ export default function GameUI() {
         width: undefined,
         height: undefined
     })
+    const [guessed, setGuessed] = useState([])
+    const [gameComplete, setGameComplete] = useState(false)
+    const [pokeCards, setPokeCards] = useState([])
 
     useEffect(() => {
         setIsCorrect(false)
@@ -30,16 +33,34 @@ export default function GameUI() {
         newPokemon()
     }, [found])
 
+    const idGenerator = () => {
+        const id = Math.floor(Math.random() * (50 - 1 + 1) + 1)
+        return checkIfGuessed(id)
+    }
+
+    const checkIfGuessed = (id) => {
+        const alreadyGuessed = guessed.find((usedId) => usedId === id)
+        if(alreadyGuessed) {
+            return idGenerator()
+        }
+        if(guessed.length === 25) {
+            setRevealPoke(!revealPoke)
+            return setGameComplete(true)
+        }
+        setGuessed([...guessed, id])
+        return id
+    }
 
     const newPokemon = () => {
-        const idGenerator = Math.floor(Math.random() * (50 - 1 + 1) + 1)
-        getPokemonById(idGenerator).then(setCurrent)
+        const randomId = idGenerator()
+        return getPokemonById(randomId).then(setCurrent)
     }
 
     const sendAnswer = (choice) => {
         sendAnswerToAPI(choice.name, current.data.pokemon.id)
         .then((updatedData) => {
             setCurrent(updatedData)
+            setPokeCards([...pokeCards, updatedData])
             return updatedData
         })
         .then((updatedData) => {
@@ -91,6 +112,20 @@ export default function GameUI() {
 
     return (
         <div className="game-interface">
+            {gameComplete ?
+            <div className="game-complete-box">
+                <div className="complete-message-box">
+                    <h2>Congratulations, you&apos;ve completed the game!</h2>
+                    <h3>Your score was: {score}</h3>
+                </div>
+                <div className="all-card-box">
+                    {pokeCards.map((p) => 
+                    <PokeCard current={p.data} revealPoke={revealPoke}/>)
+                    }
+                </div>
+            </div>
+            :
+            <>
             <div className="game-ui-box">
                 <h2 className="game-ui-title">Guess the pokemon</h2>
                 <p>Use the outline of the image to guess the correct Pokemon.</p>
@@ -121,6 +156,8 @@ export default function GameUI() {
                 </ReactCardFlip>}
             {!isFlipped && revealPoke &&
             <Button text={"next"} onClick={() => getNewCard()} className={"next-poke-btn"}/>}
+            </>
+        }
         </div>
     )
 }

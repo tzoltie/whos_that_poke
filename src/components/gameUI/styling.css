@@ -13,7 +13,17 @@
     flex-direction: column;
     justify-items: center;
     align-items: center;
-    gap: 1rem;
+    gap: 0.5rem;
+    background-color: #2a75bb;
+    padding: 1rem;
+}
+
+.game-ui-box > p {
+    margin: 0;
+}
+
+.game-ui-title {
+    margin: 0;
 }
 
 .btn-container {
@@ -34,6 +44,11 @@
 
 .pokemon-card-back {
     background-color: #3c5aa6!important;
+    align-self: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
 }
 
 .pokemon-card > * {
@@ -67,17 +82,15 @@
     width: 150px;
 }
 
-.pokemon-card-back {
-    align-items: center;
-}
-
 .pokemon-card-inner-back {
     display: flex;
     flex-direction: column;
-    place-items: center;
     background-color:  #2a75bb;
     height: 550px;
     gap: 1.5rem;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
 }
 
 .pokemon-logo, .pokemon-logo-upside-down {
@@ -101,4 +114,13 @@
     top: 50%;
     z-index: 2;
     color: white;
+}
+
+.options-btn {
+    background-image: linear-gradient(0.25turn, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
+    border: 3px solid gold;
+}
+
+.options-btn:focus {
+    background-image: linear-gradient(to left, rgb(123, 43, 123), rgb(225, 14, 84), rgb(225, 188, 5));
 }

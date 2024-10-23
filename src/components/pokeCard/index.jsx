@@ -1,7 +1,6 @@
 import Button from "../button";
 
 export default function PokeCard({current, pokemonNames, verifyClick, revealPoke}) {
-
   return (
     <div className="pokemon-card">
       <div className="pokemon-card-inner">
@@ -41,6 +40,7 @@ export default function PokeCard({current, pokemonNames, verifyClick, revealPoke
               text={pokemon.name}
               key={index}
               onClick={() => verifyClick(pokemon)}
+              className={"options-btn"}
             />
           ))}
         </div> : 

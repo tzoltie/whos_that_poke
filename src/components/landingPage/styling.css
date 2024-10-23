@@ -1,0 +1,14 @@
+.landing-page {
+    background-color: #ffcb05;
+    align-self: center;
+    border-radius: 25px;
+    border: 3px solid gold;
+    padding: 1rem;
+}
+
+.start-game-btn {
+    background-color: transparent;
+}
+.start-game-btn:hover {
+    border: none;
+}

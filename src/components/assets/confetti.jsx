@@ -1,7 +1,7 @@
 import ReactConfetti from "react-confetti";
 
-export default function Confetti() {
+export default function Confetti({width, height}) {
     return (
-        <ReactConfetti width={1000} height={1000}/>
+        <ReactConfetti width={width} height={height}/>
     )
 }

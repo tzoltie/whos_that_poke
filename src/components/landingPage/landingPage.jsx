@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { getPokemon } from "../../utils/apiClient";
 import Button from "../button";
 import PokemonCardBack from "../cardBack/pokemonCardBack";
+import "./styling.css"
 
 export default function LandingPage({setPokemon, setPlay}) {
 

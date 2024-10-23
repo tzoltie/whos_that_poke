@@ -19,6 +19,10 @@ export default function GameUI() {
     const [isCorrect, setIsCorrect] = useState(false)
     const [isIncorrect, setIsIncorrect] = useState(false)
     const [showConfetti, setShowConfetti] = useState(false)
+    const [windowSize, setWindowSize] = useState({
+        width: undefined,
+        height: undefined
+    })
 
     useEffect(() => {
         setIsCorrect(false)
@@ -72,10 +76,23 @@ export default function GameUI() {
         pokemonImage.style.filter = "contrast(0%)"
     }
 
+    const handleWindowSize = () => {
+        setWindowSize({
+            width: window.innerWidth,
+            height: window.innerHeight
+        })
+    }
+
+    useEffect(() => {
+        window.onresize = () => {
+            handleWindowSize
+        }
+    }, [showConfetti])
+
     return (
         <div className="game-interface">
-            <div>
-                <h2>Guess the pokemon</h2>
+            <div className="game-ui-box">
+                <h2 className="game-ui-title">Guess the pokemon</h2>
                 <p>Use the outline of the image to guess the correct Pokemon.</p>
                 <h3>Score: {score}</h3>
             </div>
@@ -85,7 +102,7 @@ export default function GameUI() {
             </>
             }
             {showConfetti &&
-                <Confetti />
+                <Confetti width={windowSize.width} height={windowSize.height}/>
             }
             {isIncorrect &&
             <>
